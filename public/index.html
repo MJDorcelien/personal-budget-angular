@@ -10,6 +10,11 @@
     <title>Personal Budget</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="main.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/chart.min.js" integrity="sha512-fMPPLjF/Xr7Ga0679WgtqoSyfUoQgdt8IIxJymStR5zV3Fyb6B3u/8DcaZ6R6sXexk5Z64bCgo2TYyn760EdcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </head>
 <body>
 
@@ -104,7 +109,7 @@
             <div class="text-box">
                 <h1>Free</h1>
                 <p>
-                    This app is free!!! And you are the only one holding your data!
+                    <canvas id="myChart" width="400" height="400"></canvas>
                 </p>
             </div>
 
@@ -120,6 +125,45 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        var dataSource = {
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: [
+                        '#ffcd56',
+                        '#ff6384',
+                        '#36a2eb',
+                        '#fd6b19',
+                    ],
+                }
+            ],
+            labels: []
+        };
+
+        function createChart() {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            new Chart(ctx, {
+                type: 'pie',
+                data: dataSource
+            });
+        }
+
+        function getBudget() {
+            axios.get('/budget')
+            .then(function (res) {
+                console.log(res);
+                for (var i=0; i < res.data.myBudget.length; i++) {
+                    dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+                    dataSource.labels[i] = res.data.myBudget[i].title;
+                }
+                createChart();
+            });
+        }
+
+        getBudget();
+    </script>
 
 </body>
 </html>
