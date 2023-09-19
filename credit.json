@@ -1,0 +1,28 @@
+{
+    "myCredit" : [
+        {
+            "title": "Chase",
+            "budget": 450
+        },
+        {
+            "title": "Discover",
+            "budget": 375
+        },
+        {
+            "title": "Capital One",
+            "budget": 150
+        }, 
+        {
+            "title": "American Express",
+            "budget": 75
+        },
+        {
+            "title": "State Employee",
+            "budget": 25
+        },
+        {
+            "title": "Wells Fargo",
+            "budget": 125
+        }
+    ]
+}
